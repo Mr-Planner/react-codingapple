@@ -4,12 +4,12 @@
 import { useEffect, useState } from 'react';
 import './App.css' // css파일 경로 
 
-// 메인 컴포넌트 
+// Root 컴포넌트 
 function App() {
 
   let logo = '강남 우동 맛집';
   // 자료를 보관하는 방법 -> 변수 / state 
-  // headline[index]로 접근
+  // todo 배열의 객체화 적용 해보기
   let [headline, setHeadline] = useState(['남자코트 추천', '강남 우동맛집', '파이썬 독학']);
   // headline[index]로 접근 
   // let의 두번째 인자 -> state 변경함수 
@@ -33,6 +33,7 @@ function App() {
 
 
   // return 내부에는 하나의 tag만 존재 
+  // return 내부 : JSX 영역 
   // -> <></> (fragment 문법) or <div></div> 하나의 태그만 존재하도록 
   return (
     // JSX로 jsx파일에서 html작성 
@@ -105,6 +106,7 @@ function App() {
         })
       }
 
+      {/*JSX 안에 JS 넣으려면 {} 사용*/}
       {
         // index를 전달 
         display == true ? <Modal index={headlineIndex} headline={headline} setHeadline={setHeadline} todayDate={todayDate}></Modal>
@@ -154,8 +156,9 @@ function Modal(props) {
       <p>날짜 : {props.todayDate[props.index]}</p>
       <p>상세내용</p>
       <button onClick={() => {
+        // todo 선택된 Index 수정으로 변경
         let copyHeadline = [...props.headline];
-        copyHeadline[0] = '여자코트 추천';
+        copyHeadline[props.index] = '여자코트 추천';
         props.setHeadline(copyHeadline);
       }}>글 수정</button>
     </div>
