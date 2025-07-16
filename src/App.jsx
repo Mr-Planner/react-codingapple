@@ -4,6 +4,7 @@
 import { useEffect, useState } from 'react';
 import './App.css' // css파일 경로 
 
+// 메인 컴포넌트 
 function App() {
 
   let logo = '강남 우동 맛집';
@@ -24,7 +25,7 @@ function App() {
   let date = today.getDate();
   let dateString = `${month}월 ${date}일 발행`;
 
-  // 왜 필요한지
+  // 랜더링 이후 한번만 실행
   useEffect(() => {
     setTodayDate(Array(headline.length).fill(dateString));
   }, [])
@@ -64,8 +65,9 @@ function App() {
         */}
 
       {
-        // title : headline 배열의 각 value, i : 현재 index (headline array)
+        // title : headline 배열의 각 value, index : 현재 index (headline array)
         // map : 반복해서 작업 수행  (배열등에 사용)
+        // -> JSX 반복 출력
         headline.map(function (title, index) {
           return (
             <div className='list' key={index}>
@@ -144,6 +146,7 @@ function App() {
 3. 다른 페이지에 등장
 4. 팀원과 협업시에 작업 분배단위
 */
+// 자식 컴포넌트는 props read만 가능 
 function Modal(props) {
   return (
     <div className='modal'>
