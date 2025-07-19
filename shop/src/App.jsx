@@ -1,9 +1,16 @@
-import { useState } from 'react'
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useState } from 'react';
 import { Button, Navbar, Container, Nav, Row, Col } from 'react-bootstrap';
 
+import data from './data.js'; // 긴 코드는 export / import
+import ProductLists from './ProductLists.jsx';
+
 function App() {
+
+  // 서버에서 가져온 데이터 가정
+  // import된 데이터 사용
+  let [shoes, setShoes] = useState(data);
 
   return (
     <div className='App'>
@@ -24,23 +31,14 @@ function App() {
 
       <Container>
         <Row>
-          <Col>
-            <img className='shoeImage' src='/airforce.png' />
-            <h4>상품명</h4>
-            <p>상품정보</p>
-          </Col>
-
-          <Col>
-            <img className='shoeImage' src='/superstar.png' />
-            <h4>상품명</h4>
-            <p>상품정보</p>
-          </Col>
-
-          <Col>
-            <img className='shoeImage' src='/newbalance.png' />
-            <h4>상품명</h4>
-            <p>상품정보</p>
-          </Col>
+          {/* map 사용 
+          state를 map으로 순회, 각 배열 요소를 자식 컴포넌트에 props로
+          */}
+          {
+            shoes.map((shoe) => (
+              <ProductLists shoe={shoe}></ProductLists>
+            ))
+          }
         </Row>
       </Container>
     </div>
