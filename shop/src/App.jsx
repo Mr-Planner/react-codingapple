@@ -4,8 +4,9 @@ import { useState } from 'react';
 import { Button, Navbar, Container, Nav, Row, Col } from 'react-bootstrap';
 
 import data from './data.js'; // 긴 코드는 export / import
-import DetailedPage from './DetailedPage.jsx';
-import MainPage from './MainPage.jsx';
+import DetailedPage from './routes/DetailedPage.jsx';
+import MainPage from './routes/MainPage.jsx';
+import EventPage from './routes/EventPage.jsx';
 // react-router-dom 
 import { Routes, Route, Link } from 'react-router-dom';
 
@@ -29,9 +30,18 @@ function App() {
       </Navbar>
 
       <Routes>
+        {/* 
+        path '*' : 정의 X인 모든 페이지 경로 
+        ' /: ' : url 파라미터
+        */}
         <Route path="/" element={<MainPage shoes={shoes}></MainPage>}></Route>
         <Route path="/detail/:id" element={<DetailedPage shoes={shoes}></DetailedPage>}></Route>
         <Route path="/about" element={<div>about page </div>}></Route>
+
+        <Route path="/event" element={<EventPage></EventPage>}>
+          <Route path="one" element={<div>첫 주문시 양배추즙 서비스</div>}></Route>
+          <Route path="two" element={<div>생일기념 쿠폰받기</div>}></Route>
+        </Route>
 
       </Routes>
 

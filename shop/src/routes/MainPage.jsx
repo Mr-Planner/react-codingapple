@@ -1,6 +1,6 @@
-import './App.css'
+import '../App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import ProductLists from './ProductLists.jsx';
+import ProductLists from '../components/ProductLists.jsx';
 import { Container, Row } from 'react-bootstrap';
 
 function MainPage(props) {

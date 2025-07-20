@@ -1,6 +1,7 @@
 // object type array
 let data = [
     {
+        // state에 저장된 순서가 바뀔 수 있으니 id값으로 인덱스 지정하면 된다
         id: 0,
         img: "/airforce.png",
         title: "Nike Airforce",

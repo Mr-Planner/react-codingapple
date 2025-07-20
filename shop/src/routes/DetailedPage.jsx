@@ -1,11 +1,18 @@
-import './App.css'
+import '../App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Col } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 
 function DetailedPage(props) {
+    // userParams : url 파라미터를 가져오는 것 (object 형태)
     let { id } = useParams(); // 구조분해 
     let shoe = props.shoes.find(shoe => shoe.id === Number(id)); // === : type비교 
+
+    if (!shoe) {
+        return (
+            <p>일치하는 상품이 없습니다.</p>
+        )
+    }
 
     return (
         <div className="container">
