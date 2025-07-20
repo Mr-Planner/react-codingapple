@@ -5,7 +5,7 @@
   background-position: center;
 }
 
-.shoeImage {
+.shoe-image {
   width: 100%;
   /* grid 안에서 가득 차게 (가로는 채움) */
   object-fit: contain;
@@ -13,4 +13,9 @@
   display: block;
   background-color: #f0f0f0;
   /* 남는 여백이 보이도록 임의 색상 */
+}
+
+.link-to-detail {
+  color: inherit;
+  text-decoration: none;
 }

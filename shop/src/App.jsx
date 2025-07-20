@@ -4,7 +4,10 @@ import { useState } from 'react';
 import { Button, Navbar, Container, Nav, Row, Col } from 'react-bootstrap';
 
 import data from './data.js'; // 긴 코드는 export / import
-import ProductLists from './ProductLists.jsx';
+import DetailedPage from './DetailedPage.jsx';
+import MainPage from './MainPage.jsx';
+// react-router-dom 
+import { Routes, Route, Link } from 'react-router-dom';
 
 function App() {
 
@@ -25,22 +28,13 @@ function App() {
         </Container>
       </Navbar>
 
-      <div className='main-bg'>
+      <Routes>
+        <Route path="/" element={<MainPage shoes={shoes}></MainPage>}></Route>
+        <Route path="/detail/:id" element={<DetailedPage shoes={shoes}></DetailedPage>}></Route>
+        <Route path="/about" element={<div>about page </div>}></Route>
 
-      </div>
+      </Routes>
 
-      <Container>
-        <Row>
-          {/* map 사용 
-          state를 map으로 순회, 각 배열 요소를 자식 컴포넌트에 props로
-          */}
-          {
-            shoes.map((shoe) => (
-              <ProductLists shoe={shoe}></ProductLists>
-            ))
-          }
-        </Row>
-      </Container>
     </div>
 
   )
