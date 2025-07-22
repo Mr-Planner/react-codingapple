@@ -43,7 +43,7 @@ function App() {
         </Container>
       </Navbar>
 
-      <YellowBtn bg = 'blue'>Button</YellowBtn>
+      {/* <YellowBtn bg = 'blue'>Button</YellowBtn> */}
 
       <Routes>
         {/* 
