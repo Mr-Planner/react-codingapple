@@ -1,14 +1,28 @@
+/* eslint-disable*/
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useState } from 'react';
+// react-router-dom 
+import { Routes, Route, Link } from 'react-router-dom';
+import styled from 'styled-components';
 import { Button, Navbar, Container, Nav, Row, Col } from 'react-bootstrap';
 
+import { useState } from 'react';
 import data from './data.js'; // 긴 코드는 export / import
 import DetailedPage from './routes/DetailedPage.jsx';
 import MainPage from './routes/MainPage.jsx';
 import EventPage from './routes/EventPage.jsx';
-// react-router-dom 
-import { Routes, Route, Link } from 'react-router-dom';
+
+
+// component라서 대문자 
+// styled-components 
+// 1. CSS파일 없이 JS에서 style적용
+// 2. style이 다른 js파일로 전이 X
+// 3. 로딩시간 단축
+let YellowBtn = styled.button`
+  background : ${props => props.bg};
+  color : ${props => props.bg == 'blue' ? 'white' : 'black'};
+  padding : 10px;
+`
 
 function App() {
 
@@ -28,6 +42,8 @@ function App() {
           </Nav>
         </Container>
       </Navbar>
+
+      <YellowBtn bg = 'blue'>Button</YellowBtn>
 
       <Routes>
         {/* 
