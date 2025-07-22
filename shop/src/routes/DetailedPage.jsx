@@ -22,16 +22,24 @@ function DetailedPage(props) {
     // userParams : url 파라미터를 가져오는 것 (object 형태)
 
     // useEffect()
-    // 컴포넌트가 mount / update할때 수행
+    // 컴포넌트가 mount / update할때 수행 (dependency 없을 때)
     // html '렌더링 이후'에 수행 
     // 1. 어려운 연산 / 2. 서버에서 데이터 가져오기 / 3. 타이머 장착
     // 목적 : 핵심기능이 아닌 다른 기능들을 넣는다
 
     useEffect(() => {
-        setTimeout(() => { // 2초 후 시행 할 로직
+        let timer = setTimeout(() => { // 2초 후 시행 할 로직
             setPopup(false);
         }, 2000);
-    });
+        console.log(2);
+
+        // clean up function : useEffect 실행 전에 실행 (unmount할때도 실행)
+        // 주요 용도 : 타이머 제거, socket 연결 제거, ajax 요청 중단 
+        return () => {
+            console.log(1)
+            clearTimeout(timer);
+        }
+    }, []); // dependency를 []로 하면 mount될때만 실행
 
     let { id } = useParams(); // 구조분해 
     let shoe = props.shoes.find(shoe => shoe.id === Number(id)); // === : type비교 
