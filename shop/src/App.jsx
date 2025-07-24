@@ -50,7 +50,7 @@ function App() {
         path '*' : 정의 X인 모든 페이지 경로 
         ' /: ' : url 파라미터
         */}
-        <Route path="/" element={<MainPage shoes={shoes}></MainPage>}></Route>
+        <Route path="/" element={<MainPage shoes={shoes} setShoes = {setShoes}></MainPage>}></Route>
         <Route path="/detail/:id" element={<DetailedPage shoes={shoes}></DetailedPage>}></Route>
         <Route path="/about" element={<div>about page </div>}></Route>
 

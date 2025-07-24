@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 function ProductLists(props) {
 
     return (
-        <Col>
+        <Col xs={4} md ={4}>
             <Link className='link-to-detail' to={`/detail/${props.shoe.id}`}>
                 <img className="shoe-image" src={props.shoe.img}></img>
                 <h4>{props.shoe.title}</h4>

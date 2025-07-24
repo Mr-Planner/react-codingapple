@@ -2,6 +2,7 @@ import '../App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ProductLists from '../components/ProductLists.jsx';
 import { Container, Row } from 'react-bootstrap';
+import axios from 'axios';
 
 function MainPage(props) {
     return (
@@ -22,6 +23,20 @@ function MainPage(props) {
                     }
                 </Row>
             </Container>
+
+            <button onClick={() => {
+                axios.get('https://codingapple1.github.io/shop/data2.json')
+                // 요청 성공시
+                .then((result) => {
+                    console.log(result.data);
+                    // ...(spread) : 배열을 펼치는 연산자
+                    props.setShoes([...props.shoes, ...result.data]);
+                })
+                // 요청 실패시
+                .catch(() => {
+                    console.log('요청 실패');
+                })
+            }}>더보기</button>
         </>
     )
 }
