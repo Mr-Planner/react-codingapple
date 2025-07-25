@@ -17,8 +17,8 @@ function MainPage(props) {
                     각 배열 요소를 자식 컴포넌트에 props로
                     */}
                     {
-                        props.shoes.map((shoe) => (
-                            <ProductLists shoe={shoe}></ProductLists>
+                        props.shoes.map((shoe, index) => (
+                            <ProductLists shoe={shoe} index = {index}></ProductLists>
                         ))
                     }
                 </Row>

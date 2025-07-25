@@ -6,11 +6,12 @@ import { Link } from 'react-router-dom';
 // index에 따른 데이터를 보여야
 // component 형식 : function( return(<div/>)) 
 function ProductLists(props) {
+    let imgIndex = props.index + 1;
 
     return (
         <Col xs={4} md ={4}>
             <Link className='link-to-detail' to={`/detail/${props.shoe.id}`}>
-                <img className="shoe-image" src={props.shoe.img}></img>
+                <img className="shoe-image" src={`https://codingapple1.github.io/shop/shoes${imgIndex}.jpg`}></img>
                 <h4>{props.shoe.title}</h4>
                 <p>{props.shoe.price}</p>
             </Link>
