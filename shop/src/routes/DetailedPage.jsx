@@ -49,6 +49,7 @@ function DetailedPage(props) {
 
     let { id } = useParams(); // 구조분해 
     let shoe = props.shoes.find(shoe => shoe.id === Number(id)); // === : type비교 
+    let imgIndex = Number(id) + 1;
 
     if (!shoe) {
         return (
@@ -66,14 +67,15 @@ function DetailedPage(props) {
                 <div className="row">
                     
                     <div className="col-md-6">
-                        <img src={shoe.img} width="100%" />
+                        <img src={`https://codingapple1.github.io/shop/shoes${imgIndex}.jpg`} width="100%" />
                     </div>
+
                     <div className="col-md-6">
                         <h4 className="pt-5">{shoe.title}</h4>
                         <p>{shoe.content}</p>
                         <p>{shoe.price}</p>
 
-                        <div>
+                        <div className="mb-2">
                             <input type="text" placeholder='숫자만 입력하세요' onChange={(e) => {
                                 setIsNum(e.target.value);
 
