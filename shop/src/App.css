@@ -19,3 +19,12 @@
   color: inherit;
   text-decoration: none;
 }
+
+.tab-ani-start, .detail-page-ani-start {
+  opacity: 0;
+}
+
+.tab-ani-end, .detail-page-ani-end {
+  opacity: 1;
+  transition: opacity 0.5s; /*투명도 0.5씩 증가 animation*/
+}

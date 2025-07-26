@@ -30,12 +30,16 @@ function DetailedPage(props) {
     let [popup, setPopup] = useState(true);
     let [isNum, setIsNum] = useState('');
     let [tabIndex, setTabIndex] = useState(0);
+    let [detailPageAni, setDetailPageAni] = useState("");
 
     useEffect(() => {
         let timer = setTimeout(() => { // 2초 후 시행 할 로직
             setPopup(false);
         }, 2000);
-        console.log(2);
+        
+        let aniTimer = setTimeout(() => {
+            setDetailPageAni("detail-page-ani-end")
+        }, 100);
 
         if (isNaN(isNum)) {
             alert('숫자만 입력하세요');
@@ -43,8 +47,8 @@ function DetailedPage(props) {
         // clean up function : useEffect 실행 전에 실행 (unmount할때도 실행)
         // 주요 용도 : 타이머 제거, socket 연결 제거, ajax 요청 중단 
         return () => {
-            console.log(1)
-            clearTimeout(timer);
+            setDetailPageAni("");
+            clearTimeout(timer, aniTimer);
         }
     },[isNum]); // dependency를 []로 하면 mount될때만 실행
 
@@ -59,7 +63,7 @@ function DetailedPage(props) {
     }
 
     return (
-        <>
+        <div className = {`detail-page-ani-start ${detailPageAni}`}>
             {
             popup ? <PopupDiv>2초이내 구매시 할인</PopupDiv> : ""
             }
@@ -109,13 +113,32 @@ function DetailedPage(props) {
 
             <TabConponent tabIndex={tabIndex}></TabConponent>
              
-        </>
+        </div>
     )
 }
 
-function TabConponent({tabIndex}) {
+// {tabIndex} :  props 대신 사용 
+function TabConponent({ tabIndex }) {
+    let [fadeAni, setFadeAni] = useState("");
+
+    useEffect(() => {
+
+        // automatic batch무시, setFadeAni 즉시 적용
+        let timer = setTimeout(() => {
+            setFadeAni("tab-ani-end")
+        }, 100);
+        
+        return (() => {
+            clearTimeout(timer);
+            setFadeAni("");
+        })
+    }, [tabIndex])
     
-    return [<div>내용1</div>, <div>내용2</div>,<div>내용3</div>][tabIndex]
+    return (
+        <div className= {`tab-ani-start ${fadeAni}`}>
+            {[<div>내용1</div>, <div>내용2</div>, <div>내용3</div>][tabIndex]}
+        </div>
+    )
 }
 
 export default DetailedPage;
