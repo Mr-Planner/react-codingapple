@@ -6,7 +6,7 @@ import { Routes, Route, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Button, Navbar, Container, Nav, Row, Col } from 'react-bootstrap';
 
-import { useState } from 'react';
+import { useState, createContext} from 'react';
 import data from './data.js'; // 긴 코드는 export / import
 import DetailedPage from './routes/DetailedPage.jsx';
 import MainPage from './routes/MainPage.jsx';
@@ -24,11 +24,14 @@ let YellowBtn = styled.button`
   padding : 10px;
 `
 
+export let Context1 = createContext();
+
 function App() {
 
   // 서버에서 가져온 데이터 가정
   // import된 데이터 사용
   let [shoes, setShoes] = useState(data);
+  let [stock, setStock] = useState([10,11,12]); // contextAPI용 state
 
   return (
     <div className='App'>
@@ -51,7 +54,11 @@ function App() {
         ' /: ' : url 파라미터
         */}
         <Route path="/" element={<MainPage shoes={shoes} setShoes = {setShoes}></MainPage>}></Route>
-        <Route path="/detail/:id" element={<DetailedPage shoes={shoes}></DetailedPage>}></Route>
+        <Route path="/detail/:id" element={
+          <Context1.Provider value={{stock}}>
+            <DetailedPage shoes={shoes}></DetailedPage>
+          </Context1.Provider>
+        }></Route>
         <Route path="/about" element={<div>about page </div>}></Route>
 
         <Route path="/event" element={<EventPage></EventPage>}>

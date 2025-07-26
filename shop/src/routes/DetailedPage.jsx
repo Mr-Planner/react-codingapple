@@ -1,7 +1,8 @@
 /* eslint-disable*/
 import '../App.css'
+import { Context1 } from './../App.jsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { Col, Nav } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
@@ -31,6 +32,8 @@ function DetailedPage(props) {
     let [isNum, setIsNum] = useState('');
     let [tabIndex, setTabIndex] = useState(0);
     let [detailPageAni, setDetailPageAni] = useState("");
+
+    let { stock } = useContext(Context1); 
 
     useEffect(() => {
         let timer = setTimeout(() => { // 2초 후 시행 할 로직
@@ -70,13 +73,13 @@ function DetailedPage(props) {
 
             <div className="container">
                 <div className="row">
-                    
+
                     <div className="col-md-6">
                         <img src={`https://codingapple1.github.io/shop/shoes${imgIndex}.jpg`} width="100%" />
                     </div>
 
                     <div className="col-md-6">
-                        <h4 className="pt-5">{shoe.title}</h4>
+                        <h4 className="pt-5">{shoe.title} {`(${stock[0]})`}</h4>
                         <p>{shoe.content}</p>
                         <p>{shoe.price}</p>
 
@@ -92,6 +95,7 @@ function DetailedPage(props) {
                     </div>
                 </div>
             </div>
+
 
             <Nav variant="tabs"  defaultActiveKey="link0">
                 <Nav.Item>
@@ -133,7 +137,7 @@ function TabConponent({ tabIndex }) {
             setFadeAni("");
         })
     }, [tabIndex])
-    
+
     return (
         <div className= {`tab-ani-start ${fadeAni}`}>
             {[<div>내용1</div>, <div>내용2</div>, <div>내용3</div>][tabIndex]}
