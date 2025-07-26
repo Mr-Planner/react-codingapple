@@ -5,6 +5,11 @@ import { Col, Container, Row } from 'react-bootstrap';
 import axios from 'axios';
 import { useEffect, useState, useRef } from 'react';
 
+// post 요청 
+// axios.post('URL', {name : 'kim'}) 
+// 동시에 ajax 요청
+// Promise.all( [axios.get('URL1'), axios.get('URL2')] ).then() 
+
 function MainPage(props) {
     // state 변경은 asynchronous하다 -> 바로 반영 X
     let [clickCnt, setClickCnt] = useState(0);
@@ -82,8 +87,6 @@ function MainPage(props) {
                     </Col>
                 </Row>
             </Container>
-
-            
         </>
     )
 }

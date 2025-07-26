@@ -2,7 +2,7 @@
 import '../App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useState, useEffect } from 'react';
-import { Col } from 'react-bootstrap';
+import { Col, Nav } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -29,6 +29,7 @@ function DetailedPage(props) {
 
     let [popup, setPopup] = useState(true);
     let [isNum, setIsNum] = useState('');
+    let [tabIndex, setTabIndex] = useState(0);
 
     useEffect(() => {
         let timer = setTimeout(() => { // 2초 후 시행 할 로직
@@ -87,9 +88,34 @@ function DetailedPage(props) {
                     </div>
                 </div>
             </div>
+
+            <Nav variant="tabs"  defaultActiveKey="link0">
+                <Nav.Item>
+                    <Nav.Link onClick = {() => {
+                        setTabIndex(0)
+                    }} eventKey="link0">버튼0</Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                    <Nav.Link onClick = {() => {
+                            setTabIndex(1)
+                        }} eventKey="link1">버튼1</Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                    <Nav.Link onClick = {() => {
+                            setTabIndex(2)
+                        }} eventKey="link2">버튼2</Nav.Link>
+                </Nav.Item>
+            </Nav>
+
+            <TabConponent tabIndex={tabIndex}></TabConponent>
+             
         </>
     )
+}
 
+function TabConponent({tabIndex}) {
+    
+    return [<div>내용1</div>, <div>내용2</div>,<div>내용3</div>][tabIndex]
 }
 
 export default DetailedPage;
