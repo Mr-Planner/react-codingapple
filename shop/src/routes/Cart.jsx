@@ -1,8 +1,17 @@
+/* eslint-disable*/
 import '../App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Table } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
 
 function Cart() {
+
+    // Redux store가져오기 
+    let reduxState = useSelector((state) => {
+        return state;
+    });
+
+    let stockData = useSelector((state) => state.stockData);
 
     return (
         <div>
@@ -16,15 +25,29 @@ function Cart() {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                    <td>1</td>
-                    <td>안녕</td>
-                    <td>안녕</td>
-                    <td>안녕</td>
-                    </tr>
+                    {
+                        stockData.map((data, index) => {
+                            return (
+                                <TableCol stockData={data} key={index}></TableCol>
+                            )
+                        })
+                    }
                 </tbody>
+                
             </Table> 
         </div>
+    )
+}
+
+function TableCol({stockData}) {
+
+    return (
+        <tr>
+            <td>{stockData.id}</td>
+            <td>{stockData.name}</td>
+            <td>{stockData.count}</td>
+            <td>불가능</td>
+        </tr> 
     )
 }
 
