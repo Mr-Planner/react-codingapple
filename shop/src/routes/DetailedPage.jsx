@@ -33,7 +33,7 @@ function DetailedPage(props) {
     let [tabIndex, setTabIndex] = useState(0);
     let [detailPageAni, setDetailPageAni] = useState("");
 
-    let { stock } = useContext(Context1); 
+    let { stock } = useContext(Context1); // Context해체 함수
 
     useEffect(() => {
         let timer = setTimeout(() => { // 2초 후 시행 할 로직

@@ -11,6 +11,7 @@ import data from './data.js'; // 긴 코드는 export / import
 import DetailedPage from './routes/DetailedPage.jsx';
 import MainPage from './routes/MainPage.jsx';
 import EventPage from './routes/EventPage.jsx';
+import Cart from './routes/Cart.jsx';
 
 
 // component라서 대문자 
@@ -60,6 +61,8 @@ function App() {
           </Context1.Provider>
         }></Route>
         <Route path="/about" element={<div>about page </div>}></Route>
+
+        <Route path = "/cart" element = {<Cart></Cart>}></Route>
 
         <Route path="/event" element={<EventPage></EventPage>}>
           <Route path="one" element={<div>첫 주문시 양배추즙 서비스</div>}></Route>
