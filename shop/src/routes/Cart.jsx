@@ -2,16 +2,19 @@
 import '../App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Table } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { changeName } from '../redux/store.js';
 
 function Cart() {
 
     // Redux store가져오기 
     let reduxState = useSelector((state) => {
-        return state;
+        return state.user;
     });
 
-    let stockData = useSelector((state) => state.stockData);
+    let cartData = useSelector((state) => state.cartData);
+
+    console.log(reduxState); // changeName Test
 
     return (
         <div>
@@ -26,9 +29,9 @@ function Cart() {
                 </thead>
                 <tbody>
                     {
-                        stockData.map((data, index) => {
+                        cartData.map((data, index) => {
                             return (
-                                <TableCol stockData={data} key={index}></TableCol>
+                                <TableCol cartData={data} key={index}></TableCol>
                             )
                         })
                     }
@@ -39,14 +42,17 @@ function Cart() {
     )
 }
 
-function TableCol({stockData}) {
+function TableCol({cartData}) {
+    let dispatch = useDispatch();
 
     return (
         <tr>
-            <td>{stockData.id}</td>
-            <td>{stockData.name}</td>
-            <td>{stockData.count}</td>
-            <td>불가능</td>
+            <td>{cartData.id}</td>
+            <td>{cartData.name}</td>
+            <td>{cartData.count}</td>
+            <td><button onClick={() => {
+                dispatch(changeName())
+            }}>+</button></td>
         </tr> 
     )
 }
