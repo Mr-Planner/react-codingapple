@@ -3,7 +3,7 @@ import '../App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Table } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
-import { changeName } from '../redux/store.js';
+import { changeName, plusAge } from '../redux/userSlice.js';
 
 function Cart() {
 
@@ -13,11 +13,17 @@ function Cart() {
     });
 
     let cartData = useSelector((state) => state.cartData);
+    let dispatch = useDispatch();
 
-    console.log(reduxState); // changeName Test
+    // console.log(reduxState); // changeName Test
 
     return (
         <div>
+            <div className="d-flex flex-column align-items-center">
+                <h5>{reduxState.name} ({reduxState.age})의 장바구니</h5>
+                <button onClick={() => {dispatch(plusAge())}}>버튼</button>
+            </div>
+           
             <Table>
                 <thead>
                     <tr>

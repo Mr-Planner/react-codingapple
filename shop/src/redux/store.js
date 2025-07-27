@@ -1,23 +1,7 @@
 // Redux store
 // 전역 state 보관 장소
-import { configureStore, createSlice } from '@reduxjs/toolkit'
-
-// useState()와 동일
-// state만드는 함수
-// state == slice
-let user = createSlice({
-  // name : state name 
-  // initialState : state value
-  // {user : 'kim'}
-  name: 'user',
-  initialState: 'kim',
-  // 상태 변경함수 영역 
-  reducers: {
-    changeName(state) {
-      return 'john' + state;
-    }
-  }
-})
+import { configureStore, createSlice } from '@reduxjs/toolkit';
+import user from './userSlice.js'; // export default는 import뒤에 {} 사용 X
 
 let cartData = createSlice({
   name: 'cartData',
@@ -36,6 +20,3 @@ export default configureStore({
   }
 }) 
 
-// .actions : user의 상태 변경함수만 추출
-// state 변경함수 export
-export let {changeName} = user.actions
