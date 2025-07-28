@@ -28,3 +28,27 @@
   opacity: 1;
   transition: opacity 0.5s; /*투명도 0.5씩 증가 animation*/
 }
+
+/* Cart button */
+.btn-circle {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: lightcoral;
+  color: white;
+
+  border: none;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn-circle:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

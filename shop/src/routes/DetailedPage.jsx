@@ -4,8 +4,10 @@ import { Context1 } from './../App.jsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useState, useEffect, useContext } from 'react';
 import { Col, Nav } from 'react-bootstrap';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import {addItem} from '../redux/store.js'
+import { useDispatch, useSelector } from 'react-redux';
 
 // todo 1초 경과마다 남은 시간 변경 보여주기
 let PopupDiv = styled.div`
@@ -35,6 +37,8 @@ function DetailedPage(props) {
 
     let { stock } = useContext(Context1); // Context해체 함수
 
+    
+
     useEffect(() => {
         let timer = setTimeout(() => { // 2초 후 시행 할 로직
             setPopup(false);
@@ -59,6 +63,13 @@ function DetailedPage(props) {
     let shoe = props.shoes.find(shoe => shoe.id === Number(id)); // === : type비교 
     let imgIndex = Number(id) + 1;
 
+    // redux
+    let dispatch = useDispatch();
+    let cartData = useSelector((state) => state.cartData);
+    let item = cartData.find((item) => item.id == shoe.id);
+
+    let navigate = useNavigate();
+
     if (!shoe) {
         return (
             <p>일치하는 상품이 없습니다.</p>
@@ -80,7 +91,7 @@ function DetailedPage(props) {
 
                     <div className="col-md-6">
                         <h4 className="pt-5">{shoe.title} {`(${stock[0]})`}</h4>
-                        <p>{shoe.content}</p>
+                        <p>{shoe.content} {item?.count}</p>
                         <p>{shoe.price}</p>
 
                         <div className="mb-2">
@@ -90,7 +101,11 @@ function DetailedPage(props) {
                             }}></input>
                         </div>
 
-                        <button className="btn btn-danger">주문하기</button>
+                        <button onClick={() => {
+                            dispatch(addItem({ id: shoe.id, name: shoe.title, count: 1 }));
+                            navigate("/cart");
+                        }
+                        } className="btn btn-danger">주문하기</button>
                         
                     </div>
                 </div>

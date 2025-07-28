@@ -16,7 +16,7 @@ let user = createSlice({
       // state가 object or array일때 return 없이, 직접 수정해도 state 변경 (by immer.js)
       // cf) 객체가 아닌 원시값은 return (변경값) 사용
     },
-    plusAge(state, action) {
+    addAge(state, action) {
       state.age += action.payload; // .payload : 파라미터 추춢
     }
   }
@@ -26,4 +26,4 @@ export default user;
 
 // .actions : user의 상태 변경함수만 추출
 // state 변경함수 export
-export let { changeName, plusAge } = user.actions;
+export let { changeName, addAge } = user.actions;
