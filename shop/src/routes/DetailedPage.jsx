@@ -40,6 +40,19 @@ function DetailedPage(props) {
     
 
     useEffect(() => {
+        // localStorage에 id 추가 하기
+        let recentlyWatched = JSON.parse(localStorage.getItem("watched"));
+        let recentlyWatchedSet = new Set(recentlyWatched);
+
+        // 중복제거 추가
+        recentlyWatchedSet.add(id);
+        recentlyWatched = [...recentlyWatchedSet]; // Set -> Array
+
+        console.log("recentlyWatched", recentlyWatched);
+        // console.log(recentlyWatchedSet);
+
+        localStorage.setItem('watched', JSON.stringify(recentlyWatched));
+
         let timer = setTimeout(() => { // 2초 후 시행 할 로직
             setPopup(false);
         }, 2000);

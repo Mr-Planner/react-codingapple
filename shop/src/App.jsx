@@ -6,7 +6,7 @@ import { Routes, Route, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Button, Navbar, Container, Nav, Row, Col } from 'react-bootstrap';
 
-import { useState, createContext} from 'react';
+import { useState, createContext, useEffect} from 'react';
 import data from './data.js'; // 긴 코드는 export / import
 import DetailedPage from './routes/DetailedPage.jsx';
 import MainPage from './routes/MainPage.jsx';
@@ -29,10 +29,23 @@ export let Context1 = createContext();
 
 function App() {
 
+  // localStorage에 배열 만들어두기
+  // 중복 제거 및 화면에 보이는거 3개 이하 (이상은 더보기로)
+  useEffect(() => {
+    localStorage.setItem('watched', JSON.stringify([]));
+  }, [])
+
   // 서버에서 가져온 데이터 가정
   // import된 데이터 사용
   let [shoes, setShoes] = useState(data);
-  let [stock, setStock] = useState([10,11,12]); // contextAPI용 state
+  let [stock, setStock] = useState([10, 11, 12]); // contextAPI용 state
+  
+  // localStorage 
+  let obj = { name: 'kim' }
+  localStorage.setItem('data', JSON.stringify(obj)); // object -> json
+  let temp = localStorage.getItem('data');
+  
+  // console.log(JSON.parse(temp).name); // json -> object
 
   return (
     <div className='App'>
