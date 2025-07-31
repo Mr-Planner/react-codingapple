@@ -32,7 +32,9 @@ function App() {
   // localStorage에 배열 만들어두기
   // 중복 제거 및 화면에 보이는거 3개 이하 (이상은 더보기로)
   useEffect(() => {
+    // todo 이미 watched에 있으면 초기화 X
     localStorage.setItem('watched', JSON.stringify([]));
+    
   }, [])
 
   // 서버에서 가져온 데이터 가정

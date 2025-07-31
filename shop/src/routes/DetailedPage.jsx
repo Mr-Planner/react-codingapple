@@ -46,7 +46,7 @@ function DetailedPage(props) {
 
         // 중복제거 추가
         recentlyWatchedSet.add(id);
-        recentlyWatched = [...recentlyWatchedSet]; // Set -> Array
+        recentlyWatched = Array.from(recentlyWatchedSet); // or [...recentlyWatchedSet] (Set -> Array)
 
         console.log("recentlyWatched", recentlyWatched);
         // console.log(recentlyWatchedSet);
@@ -108,6 +108,7 @@ function DetailedPage(props) {
                         <p>{shoe.price}</p>
 
                         <div className="mb-2">
+                            {/* todo 입력시 refresh현상 수정할 것 */}
                             <input type="text" placeholder='숫자만 입력하세요' onChange={(e) => {
                                 setIsNum(e.target.value);
 
