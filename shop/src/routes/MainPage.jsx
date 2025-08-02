@@ -1,9 +1,11 @@
+/* eslint-disable*/
 import '../App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ProductLists from '../components/ProductLists.jsx';
 import { Col, Container, Row } from 'react-bootstrap';
 import axios from 'axios';
 import { useEffect, useState, useRef } from 'react';
+import RecentlyWatched from '../components/RecentlyWatched.jsx';
 
 // post 요청 
 // axios.post('URL', {name : 'kim'}) 
@@ -41,6 +43,8 @@ function MainPage(props) {
 
             </div>
 
+            <RecentlyWatched></RecentlyWatched>
+
             <Container>
                 <Row>
                     {/* map 사용 state를 map으로 순회, 
@@ -72,7 +76,7 @@ function MainPage(props) {
                             axios.get(`https://codingapple1.github.io/shop/data${nextCnt+1}.json`)
                             // 요청 성공시
                             .then((result) => {
-                                console.log(result.data);
+                                //console.log(result.data);
                                 // ...(spread) : 배열을 펼치는 연산자
                                 props.setShoes([...props.shoes, ...result.data]);
                                 setIsLoading(false);
