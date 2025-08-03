@@ -6,7 +6,9 @@ import { Routes, Route, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Button, Navbar, Container, Nav, Row, Col } from 'react-bootstrap';
 
-import { useState, createContext, useEffect} from 'react';
+import { useState, createContext, useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
 import data from './data.js'; // 긴 코드는 export / import
 import DetailedPage from './routes/DetailedPage.jsx';
 import MainPage from './routes/MainPage.jsx';
@@ -49,6 +51,17 @@ function App() {
   
   // console.log(JSON.parse(temp).name); // json -> object
 
+  // useQuery : 서버에서 데이터 가져오고, 결과 캐싱 -> 로딩 / 에러 상태 자동관리 
+  let result = useQuery({
+  // React Query 내부 캐시 시스템에서 데이터 구분 -> 같은 queryKey => 데이터 공유
+  queryKey: ['name'], 
+  // fetcher : 데이터 실제로 가져오는 함수 
+  queryFn: async () => {
+    const res = await axios.get('https://codingapple1.github.io/userdata.json');
+    return res.data;
+  }
+});
+
   return (
     <div className='App'>
       <Navbar bg="dark" data-bs-theme="dark">
@@ -59,6 +72,11 @@ function App() {
             <Nav.Link href="#features">Categories</Nav.Link>
             <Nav.Link href="#pricing">Settings</Nav.Link>
           </Nav>
+          <div>
+            { result.isLoading && 'loading...' }
+            { result.error && 'error' }
+            { result.data && `${result.data.name}님 환영합니다` }
+          </div>
         </Container>
       </Navbar>
 
