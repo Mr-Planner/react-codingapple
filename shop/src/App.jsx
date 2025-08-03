@@ -33,6 +33,7 @@ export let Context1 = createContext();
 
 function App() {
 
+  // todo 'watched'가 없을때 length -> null 발생
   let isAlreadyWatched = localStorage.getItem('watched').length;
   // localStorage에 배열 만들어두기
   // 중복 제거 및 화면에 보이는거 3개 이하 (이상은 더보기로)
@@ -66,8 +67,18 @@ function App() {
     const res = await axios.get('https://codingapple1.github.io/userdata.json');
     return res.data;
   }
-});
+  });
+  
+  // state 변경함수가 성능 저하 -> startTransition
+  // todo 제품 검색기능 만들어보기
+/*
+  let [name, setName] = useState('')
+  isPending : 변수 -> startTransition이 처리 중일때 true로 변함
+  startTransition : 함수 
 
+  let [isPending, startTransition] = useTransition()
+*/
+  
   return (
     <div className='App'>
       <Navbar bg="light" data-bs-theme="light">
@@ -75,7 +86,6 @@ function App() {
           <Navbar.Brand href="/">ShoeMarker</Navbar.Brand>
           <Nav className="me-auto">
             <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#features">Categories</Nav.Link>
             <Nav.Link href="/cart">Cart</Nav.Link>
           </Nav>
           <div>
@@ -86,6 +96,27 @@ function App() {
         </Container>
       </Navbar>
 
+      {/*
+      <div>
+        <input onChange={ (e)=>{ 
+          startTransition(()=>{
+            
+            setName(e.target.value) 
+            -> 다른 코드보다 나중에 처리
+            -> input부터 처리 후 setName 실행
+            => 타이핑 반응속도 향상 (async 느낌)
+          })
+        }}/>
+
+        {
+          isPending ? "로딩중기다리셈" :
+          a.map(()=>{
+            return <div>{name}</div>
+          })
+        } 
+    </div>
+    */}
+      
       {/* <YellowBtn bg = 'blue'>Button</YellowBtn> */}
 
       <Suspense fallback = {<div> 페이지 로딩 중 </div>}>
