@@ -5,7 +5,17 @@ import { Card, Table } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import {  addAge } from '../redux/userSlice.js';
 import {  addCount, reduceItem, deleteItem } from '../redux/store.js';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, memo } from 'react';
+
+// memo : 컴포넌트의 props가 바뀔때만 하위컴포넌트 rerendering
+// let Child = memo( function(){
+//   console.log('재렌더링됨')
+//   return <div>자식임</div>
+// })
+
+// useMemo : component load 시에 1회 실행
+// useEffect랑 비슷, 렌더링 되면서 실행 <-> useEffect : 렌더링 이후 (async)
+
 
 function Cart() {
 
@@ -17,6 +27,7 @@ function Cart() {
     let cartData = useSelector((state) => state.cartData);
     let dispatch = useDispatch();
 
+    // todo Redux State의 이름 대신 useQuery의 name으로 바꿔보기
     return (
         <div>
             <div className="d-flex flex-column align-items-center">
