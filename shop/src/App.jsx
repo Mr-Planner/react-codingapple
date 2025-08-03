@@ -2,19 +2,21 @@
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 // react-router-dom 
-import { Routes, Route, Link } from 'react-router-dom';
+import { Routes, Route,  } from 'react-router-dom';
 import styled from 'styled-components';
-import { Button, Navbar, Container, Nav, Row, Col } from 'react-bootstrap';
+import { Navbar, Container, Nav} from 'react-bootstrap';
 
-import { useState, createContext, useEffect } from 'react';
+import { useState, createContext, useEffect, lazy, Suspense } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import data from './data.js'; // 긴 코드는 export / import
-import DetailedPage from './routes/DetailedPage.jsx';
 import MainPage from './routes/MainPage.jsx';
 import EventPage from './routes/EventPage.jsx';
-import Cart from './routes/Cart.jsx';
 
+// Lazy import : 컴포넌트가 필요해질 때 import
+// 첫 페이지 로딩 속도 향상 (lazy import 컴포넌트는 느려짐)
+const DetailedPage = lazy(() => import('./routes/DetailedPage.jsx'));
+const Cart = lazy(() => import('./routes/Cart.jsx'));
 
 // component라서 대문자 
 // styled-components 
@@ -36,6 +38,7 @@ function App() {
   // 중복 제거 및 화면에 보이는거 3개 이하 (이상은 더보기로)
   useEffect(() => {
     
+    // todo 더보기 누르지 않았을때 detail page id에 접근 문제 발생
     (! isAlreadyWatched) && localStorage.setItem('watched', JSON.stringify([]));
     
   }, [])
@@ -85,27 +88,29 @@ function App() {
 
       {/* <YellowBtn bg = 'blue'>Button</YellowBtn> */}
 
-      <Routes>
-        {/* 
-        path '*' : 정의 X인 모든 페이지 경로 
-        ' /: ' : url 파라미터
-        */}
-        <Route path="/" element={<MainPage shoes={shoes} setShoes = {setShoes}></MainPage>}></Route>
-        <Route path="/detail/:id" element={
-          <Context1.Provider value={{stock}}>
-            <DetailedPage shoes={shoes}></DetailedPage>
-          </Context1.Provider>
-        }></Route>
-        <Route path="/about" element={<div>about page </div>}></Route>
+      <Suspense fallback = {<div> 페이지 로딩 중 </div>}>
+        <Routes>
+          {/* 
+          path '*' : 정의 X인 모든 페이지 경로 
+          ' /: ' : url 파라미터
+          */}
+          <Route path="/" element={<MainPage shoes={shoes} setShoes = {setShoes}></MainPage>}></Route>
+          <Route path="/detail/:id" element={
+            <Context1.Provider value={{stock}}>
+              <DetailedPage shoes={shoes}></DetailedPage>
+            </Context1.Provider>
+          }></Route>
+          <Route path="/about" element={<div>about page </div>}></Route>
 
-        <Route path = "/cart" element = {<Cart></Cart>}></Route>
+          <Route path = "/cart" element = {<Cart></Cart>}></Route>
 
-        <Route path="/event" element={<EventPage></EventPage>}>
-          <Route path="one" element={<div>첫 주문시 양배추즙 서비스</div>}></Route>
-          <Route path="two" element={<div>생일기념 쿠폰받기</div>}></Route>
-        </Route>
+          <Route path="/event" element={<EventPage></EventPage>}>
+            <Route path="one" element={<div>첫 주문시 양배추즙 서비스</div>}></Route>
+            <Route path="two" element={<div>생일기념 쿠폰받기</div>}></Route>
+          </Route>
 
-      </Routes>
+        </Routes>
+      </Suspense>
 
     </div>
 
