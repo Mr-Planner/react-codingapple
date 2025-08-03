@@ -31,11 +31,12 @@ export let Context1 = createContext();
 
 function App() {
 
+  let isAlreadyWatched = localStorage.getItem('watched').length;
   // localStorage에 배열 만들어두기
   // 중복 제거 및 화면에 보이는거 3개 이하 (이상은 더보기로)
   useEffect(() => {
-    // todo 이미 watched에 있으면 초기화 X
-    localStorage.setItem('watched', JSON.stringify([]));
+    
+    (! isAlreadyWatched) && localStorage.setItem('watched', JSON.stringify([]));
     
   }, [])
 
@@ -57,6 +58,8 @@ function App() {
   queryKey: ['name'], 
   // fetcher : 데이터 실제로 가져오는 함수 
   queryFn: async () => {
+    // await : 비동기 함수 (Promise) 반환 
+    // async 내부에서만 사용
     const res = await axios.get('https://codingapple1.github.io/userdata.json');
     return res.data;
   }
@@ -64,13 +67,13 @@ function App() {
 
   return (
     <div className='App'>
-      <Navbar bg="dark" data-bs-theme="dark">
+      <Navbar bg="light" data-bs-theme="light">
         <Container>
-          <Navbar.Brand href="#home">ShoeMarker</Navbar.Brand>
+          <Navbar.Brand href="/">ShoeMarker</Navbar.Brand>
           <Nav className="me-auto">
             <Nav.Link href="#home">Home</Nav.Link>
             <Nav.Link href="#features">Categories</Nav.Link>
-            <Nav.Link href="#pricing">Settings</Nav.Link>
+            <Nav.Link href="/cart">Cart</Nav.Link>
           </Nav>
           <div>
             { result.isLoading && 'loading...' }
