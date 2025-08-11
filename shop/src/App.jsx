@@ -32,14 +32,14 @@ let YellowBtn = styled.button`
 export let Context1 = createContext();
 
 function App() {
-
-  // todo 'watched'가 없을때 length -> null 발생
-  let isAlreadyWatched = localStorage.getItem('watched').length;
+  
   // localStorage에 배열 만들어두기
   // 중복 제거 및 화면에 보이는거 3개 이하 (이상은 더보기로)
   useEffect(() => {
-    
+
+    const isAlreadyWatched = localStorage.getItem('watched');
     // todo 더보기 누르지 않았을때 detail page id에 접근 문제 발생
+    // "watched"에 없으면 새로 초기화 
     (! isAlreadyWatched) && localStorage.setItem('watched', JSON.stringify([]));
     
   }, [])
