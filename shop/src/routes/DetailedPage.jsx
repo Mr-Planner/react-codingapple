@@ -37,8 +37,6 @@ function DetailedPage(props) {
 
     let { stock } = useContext(Context1); // Context해체 함수
 
-    
-
     useEffect(() => {
         // localStorage에 id 추가 하기
         let recentlyWatched = JSON.parse(localStorage.getItem("watched"));
@@ -48,7 +46,7 @@ function DetailedPage(props) {
         recentlyWatchedSet.add(id);
         recentlyWatched = Array.from(recentlyWatchedSet); // or [...recentlyWatchedSet] (Set -> Array)
 
-        console.log("recentlyWatched", recentlyWatched);
+        // console.log("recentlyWatched", recentlyWatched);
         // console.log(recentlyWatchedSet);
 
         localStorage.setItem('watched', JSON.stringify(recentlyWatched));

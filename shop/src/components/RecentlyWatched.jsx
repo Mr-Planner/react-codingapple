@@ -12,7 +12,7 @@ function RecentlyWatched() {
 
     let recentlyWatchedId = JSON.parse(localStorage.getItem("watched")).map(Number);
     let reverseRecentlyWatchedIdSet = recentlyWatchedId.slice().reverse(); // 역순 번호
-    console.log("recentlyWathcedSet : ", reverseRecentlyWatchedIdSet);
+    // console.log("recentlyWathcedSet : ", reverseRecentlyWatchedIdSet);
 
     useEffect(() => {
         
@@ -37,6 +37,7 @@ function RecentlyWatched() {
 
                 <div className='recently-watched-img-container' ref = {scrollRef}> 
                     {
+                        // todo click시에 아직 안떴으면 ajax통신으로 불러 온 다음에 이동이 되야 함 
                         reverseRecentlyWatchedIdSet.map((id, index) => (
                                 <img className='recently-watched-img' key = {index} onClick={() => {
                                     navigate(`/detail/${id}`);

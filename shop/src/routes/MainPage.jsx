@@ -17,7 +17,8 @@ function MainPage(props) {
     let [clickCnt, setClickCnt] = useState(0);
     let [isLoading, setIsLoading] = useState(false);
     let [isButtonDisabled, setIsButtonDisabled] = useState(false);
-    const isFirstRender = useRef(true);
+    // useRef : 값을 기억, rerendering X (상태변경시에)
+    const isFirstRender = useRef(true); 
     const maxCount = 3;
 
     // 클릭 후에 '로딩 중' 띄우기
@@ -28,13 +29,14 @@ function MainPage(props) {
 
             return;
         }
-        
+
         // button즉시 disabled
         if (clickCnt >= maxCount) {
             setIsButtonDisabled(true);
+            setIsLoading(false);
             return;
         }
-        setIsLoading(true);
+        
     }, [clickCnt])
 
     return (
@@ -61,13 +63,15 @@ function MainPage(props) {
                     <Col xs={4} className="d-flex flex-column align-items-center">
                         {isLoading
                             &&
-                        <div className="mb-2 p-2"style={{ backgroundColor: 'ivory', fontAize: "30px", fontWeight: "bold" }}>로딩 중</div>}
+                        <div className="mb-2 p-2"style={{ backgroundColor: 'ivory', fontSize: "15px", fontWeight: "bold" }}>로딩 중</div>}
                         
                         <button onClick={() => {
                             // cf) setClickCnt(clickCnt+1) 시에 state변경이 비동기적 -> axios의 ${}에 바로 반영 X
                             const nextCnt = clickCnt + 1;
                             setClickCnt(nextCnt);
-
+                         
+                            setIsLoading(true);
+                            
                             if (nextCnt >= maxCount) {
                                 alert("더이상 상품이 없습니다");
                                 return;
@@ -79,13 +83,12 @@ function MainPage(props) {
                                 //console.log(result.data);
                                 // ...(spread) : 배열을 펼치는 연산자
                                 props.setShoes([...props.shoes, ...result.data]);
-                                setIsLoading(false);
-
+                                setTimeout(() => setIsLoading(false), 500); // 0.5초 표시 
                             })
                             // 요청 실패시
                             .catch(() => {
                                 console.log('요청 실패');
-                                setIsLoading(false);
+                                setTimeout(() => setIsLoading(false), 500); // 0.5초 표시 
                             })
                             }} disabled={isButtonDisabled}>더보기</button>
                     </Col>
