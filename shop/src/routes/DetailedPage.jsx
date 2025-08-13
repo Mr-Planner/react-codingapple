@@ -2,7 +2,7 @@
 import '../App.css'
 import { Context1 } from './../App.jsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, useRef } from 'react';
 import { Col, Nav } from 'react-bootstrap';
 import { useParams, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -31,13 +31,14 @@ function DetailedPage(props) {
     // 목적 : 핵심기능이 아닌 다른 기능들을 넣는다
 
     let [popup, setPopup] = useState(true);
-    let [isNum, setIsNum] = useState('');
     let [tabIndex, setTabIndex] = useState(0);
+    let [quantity, setQuantity] = useState('');
     let [detailPageAni, setDetailPageAni] = useState("");
 
     let { stock } = useContext(Context1); // Context해체 함수
 
     useEffect(() => {
+        // ----------------- 최근 본 상품 등록 로직 -----------------
         // localStorage에 id 추가 하기
         let recentlyWatched = JSON.parse(localStorage.getItem("watched"));
         let recentlyWatchedSet = new Set(recentlyWatched);
@@ -50,7 +51,8 @@ function DetailedPage(props) {
         // console.log(recentlyWatchedSet);
 
         localStorage.setItem('watched', JSON.stringify(recentlyWatched));
-
+        
+        // ----------------- 2초 동안 팝업 -----------------
         let timer = setTimeout(() => { // 2초 후 시행 할 로직
             setPopup(false);
         }, 2000);
@@ -59,16 +61,15 @@ function DetailedPage(props) {
             setDetailPageAni("detail-page-ani-end")
         }, 100);
 
-        if (isNaN(isNum)) {
-            alert('숫자만 입력하세요');
-        }
+        // ----------------- 주문하기 버튼 누른 후  -----------------
+        
         // clean up function : useEffect 실행 전에 실행 (unmount할때도 실행)
         // 주요 용도 : 타이머 제거, socket 연결 제거, ajax 요청 중단 
         return () => {
             setDetailPageAni("");
             clearTimeout(timer, aniTimer);
         }
-    },[isNum]); // dependency를 []로 하면 mount될때만 실행
+    },[]); // dependency를 []로 하면 mount될때만 실행
 
     let { id } = useParams(); // 구조분해 
     let shoe = props.shoes.find(shoe => shoe.id === Number(id)); // === : type비교 
@@ -110,19 +111,23 @@ function DetailedPage(props) {
 
                     <div className="col-md-6">
                         <h4 className="pt-5">{shoe.title} {`(${stock[0]})`}</h4>
-                        <p>{shoe.content} {item?.count}</p>
+                        <p>{shoe.content} </p>
                         <p>{shoe.price}</p>
+                        <p>🛒 : {item?.count}</p>
 
                         <div className="mb-2">
-                            {/* todo 입력시 refresh현상 수정할 것 */}
-                            <input type="text" placeholder='숫자만 입력하세요' onChange={(e) => {
-                                setIsNum(e.target.value);
-
+    
+                            <input type="text" placeholder='숫자만 입력하세요' value = {quantity} onChange={(e) => {
+                                let userInput = e.target.value.replace(/[^0-9]/g, "");
+                                if (e.target.value != userInput) {
+                                    alert('숫자만 입력하세요');
+                                }
+                                 setQuantity(userInput);
                             }}></input>
                         </div>
 
                         <button onClick={() => {
-                            dispatch(addItem({ id: shoe.id, name: shoe.title, count: 1 }));
+                            dispatch(addItem({ id: shoe.id, name: shoe.title, count: Number(quantity) })); 
                             navigate("/cart");
                         }
                         } className="btn btn-danger">주문하기</button>

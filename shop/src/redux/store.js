@@ -10,6 +10,7 @@ let cartData = createSlice({
     { id: 2, name: 'Grey Yordan', count: 1 }
   ],
   reducers: {
+    // 장바구니에서 + 버튼 
     addCount(state, action) {
       // state순서가 아니라 id를 기준으로 find (sort시에도 무결성유지)
       let item = state.find(data => data.id == action.payload);
@@ -17,6 +18,7 @@ let cartData = createSlice({
       
     },
 
+    // 주문하기에서 주문하기 버튼 
     addItem(state, action) {
       // id없으면 새로추가 / 있으면 수량추가 
       let item = state.find(data => data.id == action.payload.id);
@@ -24,7 +26,8 @@ let cartData = createSlice({
         state.push(action.payload);
       }
       else {
-        item.count ++;
+        item.count += action.payload.count;
+        console.log(item.count);
       }
     },
 
