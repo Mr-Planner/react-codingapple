@@ -18,8 +18,14 @@ function MainPage(props) {
     let [isLoading, setIsLoading] = useState(false);
     let [isButtonDisabled, setIsButtonDisabled] = useState(false);
     // useRef : 값을 기억, rerendering X (상태변경시에)
-    const isFirstRender = useRef(true); 
+    const isFirstRender = useRef(true);
+
+    let clickedCnt = Number(localStorage.getItem("clickedCnt") || "0");
+
     const maxCount = 3;
+
+    // ajax 1번 성공 시 마다 shoes에 setItem 
+    // 최대 더보기 클릭 횟수까지 저장하고 그 이후에는 setItem하면 안됨
 
     // 클릭 후에 '로딩 중' 띄우기
     useEffect(() => {
@@ -28,6 +34,17 @@ function MainPage(props) {
             isFirstRender.current = false;
 
             return;
+        }
+
+
+        // 처음 2번 클릭했을 때 까지만 localStorage("shoes")에 저장 
+        if (clickedCnt <= maxCount && clickedCnt == clickCnt) {
+            console.log("clickedCnt", clickedCnt)
+            console.log("clickCnt", clickCnt)
+
+            // 더보기 신발들 추가
+            localStorage.setItem("shoes", JSON.stringify(props.shoes)); 
+
         }
 
         // button즉시 disabled
@@ -69,7 +86,7 @@ function MainPage(props) {
                             // cf) setClickCnt(clickCnt+1) 시에 state변경이 비동기적 -> axios의 ${}에 바로 반영 X
                             const nextCnt = clickCnt + 1;
                             setClickCnt(nextCnt);
-                         
+                            
                             setIsLoading(true);
                             
                             if (nextCnt >= maxCount) {
@@ -83,14 +100,19 @@ function MainPage(props) {
                                 //console.log(result.data);
                                 // ...(spread) : 배열을 펼치는 연산자
                                 props.setShoes([...props.shoes, ...result.data]);
-                                setTimeout(() => setIsLoading(false), 500); // 0.5초 표시 
+                                setTimeout(() => setIsLoading(false), 500); // 0.5초 표시                                 
                             })
                             // 요청 실패시
                             .catch(() => {
                                 console.log('요청 실패');
                                 setTimeout(() => setIsLoading(false), 500); // 0.5초 표시 
                             })
-                            }} disabled={isButtonDisabled}>더보기</button>
+
+                            if (clickedCnt < maxCount) {
+                                localStorage.setItem("clickedCnt", clickedCnt+1); // 클릭 횟수 증가
+                            }
+
+                        }} disabled={isButtonDisabled}>더보기</button>
                     </Col>
                 </Row>
             </Container>

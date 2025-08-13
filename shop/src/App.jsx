@@ -32,13 +32,16 @@ let YellowBtn = styled.button`
 export let Context1 = createContext();
 
 function App() {
-  
+
   // localStorage에 배열 만들어두기
   // 중복 제거 및 화면에 보이는거 3개 이하 (이상은 더보기로)
   useEffect(() => {
-
     const isAlreadyWatched = localStorage.getItem('watched');
-    // todo 더보기 누르지 않았을때 detail page id에 접근 문제 발생
+
+    // const localStorageShoes = localStorage.getItem("shoes");
+
+    // (!localStorageShoes) && localStorage.setItem("shoes", JSON.stringify(shoes));
+
     // "watched"에 없으면 새로 초기화 
     (! isAlreadyWatched) && localStorage.setItem('watched', JSON.stringify([]));
     
@@ -51,7 +54,7 @@ function App() {
   
   // localStorage 
   let obj = { name: 'kim' }
-  localStorage.setItem('data', JSON.stringify(obj)); // object -> json
+  // localStorage.setItem('data', JSON.stringify(obj)); // object -> json
   let temp = localStorage.getItem('data');
   
   // console.log(JSON.parse(temp).name); // json -> object

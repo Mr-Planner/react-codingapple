@@ -38,6 +38,9 @@ function RecentlyWatched() {
                 <div className='recently-watched-img-container' ref = {scrollRef}> 
                     {
                         // todo click시에 아직 안떴으면 ajax통신으로 불러 온 다음에 이동이 되야 함 
+                        // 1안. ajax 통신으로 해당 img에 해당하는 id를 shoe에 임시 반영
+                        // 2안. 처음 더보기 눌렀을때의 shoe 정보들을 shoe state에 영구반영 
+                        // -> 더보기 누르고 shoe의 정보들을 localStorage에 반영하기 
                         reverseRecentlyWatchedIdSet.map((id, index) => (
                                 <img className='recently-watched-img' key = {index} onClick={() => {
                                     navigate(`/detail/${id}`);

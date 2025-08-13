@@ -72,6 +72,14 @@ function DetailedPage(props) {
 
     let { id } = useParams(); // 구조분해 
     let shoe = props.shoes.find(shoe => shoe.id === Number(id)); // === : type비교 
+    
+    // shoe를 찾을 수가 없다 -> shoe가 없다면 localStorage에서 가져올 것
+    if (shoe == null) {
+        let shoes = JSON.parse(localStorage.getItem("shoes"));
+        shoe = shoes.find(shoe => shoe.id === Number(id));
+        // console.log("shoe : ", shoe);
+    }
+
     let imgIndex = Number(id) + 1;
 
     // redux
