@@ -86,6 +86,8 @@ function DetailedPage(props) {
     // redux
     let dispatch = useDispatch();
     let cartData = useSelector((state) => state.cartData);
+    // todo recently에서 localStorage에 있는 상품 접근할때 문제 생김 
+    // localStorage ("shoes")의 setItem이 잘 안되는 듯
     let item = cartData.find((item) => item.id == shoe.id);
 
     let navigate = useNavigate();
