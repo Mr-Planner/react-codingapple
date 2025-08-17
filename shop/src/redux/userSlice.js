@@ -17,7 +17,7 @@ let user = createSlice({
       // cf) 객체가 아닌 원시값은 return (변경값) 사용
     },
     addAge(state, action) {
-      state.age += action.payload; // .payload : 파라미터 추춢
+      state.age += action.payload; // .payload : 파라미터 추출 
     }
   }
 })

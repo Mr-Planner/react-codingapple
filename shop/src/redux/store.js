@@ -3,6 +3,7 @@
 import { configureStore, createSlice } from '@reduxjs/toolkit';
 import user from './userSlice.js'; // export default는 import뒤에 {} 사용 X
 
+// configureStore 
 let cartData = createSlice({
   name: 'cartData',
   initialState: [
@@ -13,7 +14,7 @@ let cartData = createSlice({
     // 장바구니에서 + 버튼 
     addCount(state, action) {
       // state순서가 아니라 id를 기준으로 find (sort시에도 무결성유지)
-      let item = state.find(data => data.id == action.payload);
+      let item = state.find(data => data.id === action.payload);
       item.count ++;
       
     },
@@ -21,19 +22,18 @@ let cartData = createSlice({
     // 주문하기에서 주문하기 버튼 
     addItem(state, action) {
       // id없으면 새로추가 / 있으면 수량추가 
-      let item = state.find(data => data.id == action.payload.id);
+      let item = state.find(data => data.id === action.payload.id);
       if (!item) {
         state.push(action.payload);
       }
       else {
         item.count += action.payload.count;
-        console.log(item.count);
       }
     },
 
     // 수량 1까지 감소 (1부터는 disable)
     reduceItem(state, action) {
-      let item = state.find(data => data.id == action.payload);
+      let item = state.find(data => data.id === action.payload);
       if (item.count == 1) {
         return; 
       }
@@ -43,13 +43,14 @@ let cartData = createSlice({
 
     // 특정 상품 id 삭제
     deleteItem(state, action) {
-      let index = state.findIndex((data) => data.fd == action.payload);
+      let index = state.findIndex((data) => data.id === action.payload);
       state.splice(index, 1);
     }
   }
 }) 
 
 // redux store export
+// 전역상태에 등록 할 slice들 
 export default configureStore({
   reducer: { 
     // state 등록

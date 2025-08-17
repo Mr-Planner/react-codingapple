@@ -34,7 +34,7 @@ function Cart() {
                 <h5>{reduxState.name} ({reduxState.age})의 장바구니</h5>
                 <button onClick={() => {dispatch(addAge(1))}}>버튼</button>
             </div>
-           
+            
             <Table className="text-start align-middle">
                 <thead>
                     <tr>
