@@ -8,6 +8,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import {addItem} from '../redux/store.js'
 import { useDispatch, useSelector } from 'react-redux';
+import { useLike } from '../hooks/useLike.js'
 
 // todo 1초 경과마다 남은 시간 변경 보여주기
 let PopupDiv = styled.div`
@@ -92,6 +93,8 @@ function DetailedPage(props) {
 
     let navigate = useNavigate();
 
+    let [like, addLike] = useLike();
+
     if (!shoe) {
         return (
             <p>일치하는 상품이 없습니다.</p>
@@ -101,14 +104,19 @@ function DetailedPage(props) {
     return (
         <div className = {`detail-page-ani-start ${detailPageAni}`}>
             {
-            popup ? <PopupDiv>2초이내 구매시 할인</PopupDiv> : ""
+                popup ? <PopupDiv>2초이내 구매시 할인</PopupDiv> : ""
             }
 
-            <div className="container">
+            <div className="container">            
                 <div className="row">
 
-                    <div className="col-md-6">
+                    <div className="col-md-6 shoe-img-container">
                         <img src={`https://codingapple1.github.io/shop/shoes${imgIndex}.jpg`} width="100%" />
+                        <div className='like-area'>
+                            <h6>{ like }</h6>
+                            <button className = "like-button" onClick={addLike}>♥️</button>
+                        </div>
+ 
                     </div>
 
                     <div className="col-md-6">
@@ -116,6 +124,8 @@ function DetailedPage(props) {
                         <p>{shoe.content} </p>
                         <p>{shoe.price}</p>
                         <p>🛒 : {item?.count}</p>
+                        <div>{result}</div> 
+
 
                         <div className="mb-2">
     
