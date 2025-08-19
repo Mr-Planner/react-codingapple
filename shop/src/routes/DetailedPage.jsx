@@ -9,6 +9,7 @@ import styled from 'styled-components';
 import {addItem} from '../redux/store.js'
 import { useDispatch, useSelector } from 'react-redux';
 import { useLike } from '../hooks/useLike.js'
+import { useUserName } from '../hooks/useUserName.js';
 
 // todo 1초 경과마다 남은 시간 변경 보여주기
 let PopupDiv = styled.div`
@@ -94,6 +95,7 @@ function DetailedPage(props) {
     let navigate = useNavigate();
 
     let [like, addLike] = useLike();
+    const userName = useUserName();
 
     if (!shoe) {
         return (
@@ -124,7 +126,11 @@ function DetailedPage(props) {
                         <p>{shoe.content} </p>
                         <p>{shoe.price}</p>
                         <p>🛒 : {item?.count}</p>
-                        <div>{result}</div> 
+
+                        {/* 
+                        username.json으로 axios요청 한 결과
+                        <div>{userName}</div>  
+                        */}
 
 
                         <div className="mb-2">
